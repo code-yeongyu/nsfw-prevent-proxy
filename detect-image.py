@@ -4,14 +4,19 @@ An Example for detecting image responses using Content-Type from HTTP headers.
 Run as follows: mitmproxy -s detect-image.py
 """
 
+import requests
+
 
 class ImageInterceptor:
-    def response(self, flow):
+    async def response(self, flow):
         content_type: str = flow.response.headers.get(b'Content-Type')
-        if 'image' in content_type:
+        if content_type is not None and 'image' in content_type:  # detect image
             image = flow.response.content
-            # classification logics
-            flow.kill()
+            response = requests.post(
+                'https://youmo-api.transign.co/classify',
+                files={'image': image},
+            )
+            flow.response.content = response.content
 
 
 addons = [ImageInterceptor()]
