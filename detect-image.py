@@ -22,8 +22,6 @@ class ImageInterceptor:
                     'content_type': content_type,
                 },
             )
-            if response != 200:
-                print(response.content)
             flow.response.content = response.content
             print("time :", time.time() - start)  # 현재시각 - 시작시간 = 실행 시간
 
