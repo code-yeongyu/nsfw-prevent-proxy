@@ -17,7 +17,9 @@ class ImageInterceptor:
                 'https://youmo-api.transign.co/classify',
                 files={
                     'image': image,
-                    'content_type': content_type
+                },
+                data={
+                    'content_type': content_type,
                 },
             )
             if response != 200:
